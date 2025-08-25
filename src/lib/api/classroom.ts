@@ -1,15 +1,16 @@
+// services/classroom.ts
 import api from "./axios";
 import { companyService } from "./company";
 
 export interface RecordingSettings {
-  resolution: string; // e.g. "1920x1080", "1280x720"
-  bitrate: number; // in kbps
+  resolution: string;
+  bitrate: number; 
   fps: number;
-  codec: string; // e.g. "h264", "vp8"
+  codec: string; 
   audioQuality: {
-    bitrate: number; // in kbps
-    sampleRate: number; // e.g. 44100, 48000
-    channels: number; // 1 for mono, 2 for stereo
+    bitrate: number;
+    sampleRate: number; 
+    channels: number;
   };
 }
 
@@ -58,7 +59,7 @@ export interface Classroom {
   salary?: {
     __v: number;
   };
-  recordingSettings?: RecordingSettings; // Add recording settings
+  recordingSettings?: RecordingSettings; 
 }
 
 export interface Attendance {
@@ -105,7 +106,55 @@ export interface PostDiary {
   files?: File[];
 }
 
+/**
+ * Cấu trúc dữ liệu đơn giản cho một item trong bộ lọc lớp học.
+ */
+export interface ClassroomFilterItem {
+  id: string;   
+  name: string; 
+}
+
 export const classroomService = {
+  
+  /**
+   * Lấy thông tin chi tiết của một lớp học dựa vào classID.
+   */
+  async getClassroomById(classId: string): Promise<Classroom | null> {
+    if (!classId) {
+      console.warn("classId không được cung cấp.");
+      return null;
+    }
+    try {
+      const response = await api.get(`/classroom/${classId}`);
+      return response.data?.data || response.data || null;
+    } catch (error: any) {
+      console.error(`Lỗi khi lấy thông tin lớp học với ID ${classId}:`, error.message);
+      return null;
+    }
+  },
+
+  /**
+   * Lấy danh sách các lớp học đã được định dạng sẵn cho bộ lọc (dropdown).
+   */
+  async getClassroomFilterData(): Promise<ClassroomFilterItem[]> {
+    try {
+      const classrooms = await this.getClassrooms();
+      const filterData = classrooms
+        .map(cls => {
+          const displayName = cls.classID;
+           return {
+            id: cls.classID,
+           name: displayName,
+    };
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+      return filterData;
+    } catch (error) {
+      console.error("Lỗi khi tạo dữ liệu cho bộ lọc lớp học:", error);
+      return [];
+    }
+  },
+
   async getClassrooms(): Promise<Classroom[]> {
     const branchCode = companyService.getSelectedBranch();
     const companyId = companyService.getSelectedCompany();
@@ -119,97 +168,48 @@ export const classroomService = {
         params: {
           field: JSON.stringify({ partnerSchoolName: true, salary: true }),
           branch: branchCode,
-          // isActive: true,
         },
         headers: {
           "x-company": companyId,
         },
       });
 
-      if (response.data) {
-        const classrooms =
-          response.data.data || response.data.classrooms || response.data;
-        if (Array.isArray(classrooms)) {
-          return classrooms;
-        }
-        console.warn("Unexpected response format:", response.data);
-      }
-      return [];
+      const classrooms = response.data?.data || response.data?.classrooms || response.data;
+      return Array.isArray(classrooms) ? classrooms : [];
     } catch (error: any) {
-      console.error("Error fetching classrooms:", {
-        error: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
-      throw error; // Re-throw to let the component handle the error
+      console.error("Error fetching classrooms:", error.message);
+      throw error;
     }
   },
 
   async getClassroomAttendance(classCode: string): Promise<Attendance[]> {
-    if (!classCode) {
-      return [];
-    }
-
+    if (!classCode) return [];
     try {
       const response = await api.get(`/classroom/${classCode}/attendance`);
       return response.data.data || [];
     } catch (error: any) {
-      console.error("Error fetching classroom attendance:", {
-        error: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
+      console.error("Error fetching classroom attendance:", error.message);
       return [];
     }
   },
 
-  async postComment({
-    attendanceId,
-    content,
-    files,
-  }: PostComment): Promise<any> {
+  async postComment(payload: PostComment): Promise<any> {
     const formData = new FormData();
-    formData.append("content", content);
-
-    if (files && files.length > 0) {
-      files.forEach((file, index) => {
-        formData.append(`file${index + 1}`, file);
-      });
+    formData.append("content", payload.content);
+    if (payload.files) {
+      payload.files.forEach((file) => formData.append(`files`, file));
     }
-
-    const response = await api.post(
-      `/classroom/attendance/${attendanceId}/comment`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
+    const response = await api.post(`/classroom/attendance/${payload.attendanceId}/comment`, formData);
     return response.data;
   },
 
-  async postDiary({ classCode, content, files }: PostDiary): Promise<any> {
+  async postDiary(payload: PostDiary): Promise<any> {
     const formData = new FormData();
-    formData.append("content", content);
-
-    if (files && files.length > 0) {
-      files.forEach((file, index) => {
-        formData.append(`file${index + 1}`, file);
-      });
+    formData.append("content", payload.content);
+    if (payload.files) {
+      payload.files.forEach((file) => formData.append(`files`, file));
     }
-
-    const response = await api.post(
-      `/classroom/${classCode}/diary/post`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
+    const response = await api.post(`/classroom/${payload.classCode}/diary/post`, formData);
     return response.data;
   },
 };

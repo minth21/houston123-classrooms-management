@@ -7,7 +7,11 @@
     "recordings": "Ghi hình",
     "teachers": "Giảng viên",
     "settings": "Cài đặt",
-    "new_badge": "Mới"
+    "new_badge": "Mới",
+    "student_list": "Học sinh",
+    "all_students": "Tất cả",
+    "absent_students": "Vắng mặt",
+    "score_students": "Điểm số"
   },
   "sidebar": {
     "current_location": "Vị trí hiện tại",
@@ -374,7 +378,7 @@
       "friday": "Thứ 6",
       "weekend": "Cuối tuần"
     },
-     "selectionPrompt": {
+    "selectionPrompt": {
       "title": "Vui lòng chọn công ty và chi nhánh",
       "description": "Bạn cần chọn công ty và chi nhánh trước khi xem danh sách lớp học"
     },
@@ -386,7 +390,7 @@
       "classId": "Mã lớp",
       "subject": "Tên môn học",
       "teacher": "Giáo viên",
-       "startDate": "Ngày bắt đầu",
+      "startDate": "Ngày bắt đầu",
       "endDate": "Ngày kết thúc",
       "studentCount": "Sĩ số",
       "status": "Tình trạng",
@@ -415,6 +419,97 @@
       },
       "studentCount_one": "Sĩ số: {{count}} học viên",
       "studentCount_other": "Sĩ số: {{count}} học viên"
+    }
+  },
+  "studentsPage": {
+    "header": {
+      "title": "DANH SÁCH HỌC SINH",
+      "description": "Xem và quản lý thông tin tất cả học sinh trong chi nhánh."
+    },
+    "loading": "Đang tải và tổng hợp dữ liệu học sinh...",
+    "noData": "Không có học sinh nào được tìm thấy.",
+    "tableHeaders": {
+      "studentId": "Mã học sinh",
+      "name": "Họ và tên",
+      "teacherId": "Mã giáo viên",
+      "teacherName": "Tên giáo viên",
+      "classId": "Mã lớp",
+      "grade": "Lớp",
+      "subject": "Môn học",
+      "school": "Trường",
+      "phone": "Số điện thoại"
+    }
+  },
+  "absentPage": {
+    "header": {
+      "title": "Danh sách Vắng học",
+      "description": "Thống kê các lượt học sinh vắng học trong 3 tuần gần nhất."
+    },
+    "loading": "Đang tải danh sách vắng...",
+    "noData": "Không có dữ liệu vắng học trong 3 tuần gần đây.",
+    "filter": {
+      "title": "Bộ lọc",
+      "placeholder": "Lọc theo lớp",
+      "allClasses": "Tất cả các lớp"
+    },
+    "tableHeaders": {
+      "date": "Ngày vắng",
+      "classId": "Mã lớp",
+      "studentId": "Mã học sinh",
+      "name": "Họ và tên",
+      "teacher": "Giáo viên",
+      "subject": "Môn học",
+      "school": "Trường",
+      "phone": "Số điện thoại",
+      "status": "Trạng thái"
+    },
+    "status": {
+      "excused": "Có phép",
+      "unexcused": "Không phép"
+    }
+  },
+  "absenteeReport": {
+    "header": {
+      "title": "DANH SÁCH HỌC SINH VẮNG MẶT",
+      "description": "Xem và quản lý danh sách học sinh vắng mặt trong các lớp học."
+    },
+    "card": {
+      "title": "Danh sách vắng mặt"
+    },
+    "table": {
+      "studentName": "Tên học sinh",
+      "class": "Lớp",
+      "absentDate": "Ngày vắng",
+      "teacher": "Giáo viên",
+      "note": "Ghi chú"
+    },
+    "loading": "Đang xử lý báo cáo",
+    "noData": "Không tìm thấy học sinh nào vắng mặt."
+  },
+   "lowScoreByBranch": {
+    "filterCard": {
+      "title": "Chọn thời gian",
+      "monthPlaceholder": "Chọn tháng",
+      "yearPlaceholder": "Chọn năm",
+      "monthLabel": "Tháng {{month}}",
+      "searchButton": "Tìm kiếm",
+      "loadingButton": "Đang tìm..."
+    },
+    "resultsCard": {
+      "title": "Kết quả cho tháng {{month}}/{{year}}",
+      "loadingText": "Đang tải...",
+      "noResults": "Không có học sinh nào phù hợp với tiêu chí trong tháng này.",
+      "table": {
+        "headers": {
+          "studentId": "Mã học sinh",
+          "studentName": "Họ và Tên",
+          "grade": "Khối",
+          "classId": "Mã Lớp",
+          "date": "Thời gian",
+          "score": "Điểm số",
+          "comment": "Nhận xét"
+        }
+      }
     }
   }
 }

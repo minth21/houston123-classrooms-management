@@ -7,7 +7,11 @@
     "recordings": "Recordings",
     "teachers": "Teachers",
     "settings": "Settings",
-    "new_badge": "New"
+    "new_badge": "New",
+    "student_list": "Students",
+    "all_students": "All",
+    "absent_students": "Absent",
+    "score_students": "Scores"
   },
   "sidebar": {
     "current_location": "Current Location",
@@ -418,6 +422,93 @@
       },
       "studentCount_one": "Attendance: {{count}} student",
       "studentCount_other": "Attendance: {{count}} students"
+    }
+  },
+  "studentsPage": {
+    "header": {
+      "title": "Student List",
+      "description": "View and manage all student information in the branch."
+    },
+    "loading": "Loading and compiling student data...",
+    "noData": "No students found.",
+    "tableHeaders": {
+      "studentId": "Student ID",
+      "name": "Full Name",
+      "teacherId": "Teacher ID",
+      "teacherName": "Teacher Name",
+      "classId": "Class ID",
+      "grade": "Grade",
+      "subject": "Subject",
+      "school": "School",
+      "phone": "Phone Number"
+    }
+  },
+     "filter": {
+    "title": "Select Month and Year",
+    "monthPlaceholder": "Select month",
+    "monthLabel": "Month {{month}}",
+    "yearPlaceholder": "Select year"
+  },
+  "button": {
+    "search": "Search",
+    "searching": "Searching..."
+  },
+  "results": {
+    "title": "Results for {{month}}/{{year}}"
+  },
+  "table": {
+    "studentId": "Student ID",
+    "studentName": "Full Name",
+    "grade": "Grade",
+    "classId": "Class ID",
+    "date": "Date",
+    "score": "Score",
+    "comment": "Comment",
+    "loading": "Loading...",
+    "noResults": "No students match the criteria for this month."
+  },
+  "absenteeReport": {
+    "header": {
+      "title": "  LIST OF ABSENT STUDENTS",
+      "description": "View and manage the list of students who were absent from class."
+    },
+    "card": {
+      "title": "Absence List"
+    },
+    "table": {
+      "studentName": "Student Name",
+      "class": "Class",
+      "absentDate": "Date of Absence",
+      "teacher": "Teacher",
+      "note": "Note"
+    },
+    "loading": "Processing report",
+    "noData": "No absentee students found."
+  },
+ "lowScoreByBranch": {
+    "filterCard": {
+      "title": "Select Time",
+      "monthPlaceholder": "Select month",
+      "yearPlaceholder": "Select year",
+      "monthLabel": "{{month}}",
+      "searchButton": "Search",
+      "loadingButton": "Searching..."
+    },
+    "resultsCard": {
+      "title": "Results for {{month}}/{{year}}",
+      "loadingText": "Loading...",
+      "noResults": "No students match the criteria for this month.",
+      "table": {
+        "headers": {
+          "studentId": "Student ID",
+          "studentName": "Full Name",
+          "grade": "Grade",
+          "classId": "Class ID",
+          "date": "Date",
+          "score": "Score",
+          "comment": "Comment"
+        }
+      }
     }
   }
 }

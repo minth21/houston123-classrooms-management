@@ -1,6 +1,7 @@
 // lib/i18n.ts
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector"; // 1. Import LanguageDetector
 
 // Lấy tài nguyên từ các file JSON
 import translationEN from '@/../public/locales/en/translation.json';
@@ -16,11 +17,18 @@ const resources = {
 };
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector) // 2. Thêm LanguageDetector vào
+  .use(initReactI18next)
   .init({
     resources,
-    lng: "vi", // ngôn ngữ mặc định
-    fallbackLng: "vi", // ngôn ngữ dự phòng nếu không tìm thấy key
+    fallbackLng: "vi", // Ngôn ngữ dự phòng
+
+    // 3. Thêm cấu hình detection để lưu lựa chọn
+    detection: {
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+    },
+    
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
